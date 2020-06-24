@@ -1,0 +1,2 @@
+class MemberArtistsController < ApplicationController
+end

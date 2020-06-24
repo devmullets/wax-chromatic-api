@@ -1,0 +1,2 @@
+class WantlistAlbum < ApplicationRecord
+end

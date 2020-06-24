@@ -1,0 +1,2 @@
+class MemberArtist < ApplicationRecord
+end

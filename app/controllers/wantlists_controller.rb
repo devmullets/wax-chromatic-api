@@ -1,0 +1,2 @@
+class WantlistsController < ApplicationController
+end
