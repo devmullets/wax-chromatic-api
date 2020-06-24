@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :album_genres
+  resources :genres
   resources :wantlist_albums
   resources :collection_albums
   resources :member_artists
