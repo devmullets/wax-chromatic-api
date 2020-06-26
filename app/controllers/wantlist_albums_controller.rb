@@ -1,2 +1,0 @@
-class WantlistAlbumsController < ApplicationController
-end
