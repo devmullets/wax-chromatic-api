@@ -5,7 +5,8 @@ class CreateAlbums < ActiveRecord::Migration[6.0]
       t.date :release_date
       t.integer :size
       t.string :color
-      t.string :label
+      t.integer :amount_pressed
+      t.text :notes
       t.timestamps
     end
   end
