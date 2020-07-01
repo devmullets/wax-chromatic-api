@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :label_albums
+  resources :labels
   namespace :api do
     namespace :v1 do
       resources :album_genres

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_24_202126) do
+ActiveRecord::Schema.define(version: 2020_07_01_140007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,7 +59,8 @@ ActiveRecord::Schema.define(version: 2020_06_24_202126) do
     t.date "release_date"
     t.integer "size"
     t.string "color"
-    t.string "label"
+    t.integer "amount_pressed"
+    t.text "notes"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -85,8 +86,7 @@ ActiveRecord::Schema.define(version: 2020_06_24_202126) do
   create_table "artists", force: :cascade do |t|
     t.string "name"
     t.text "bio"
-    t.date "year_formed"
-    t.date "year_ended"
+    t.string "website"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -113,9 +113,27 @@ ActiveRecord::Schema.define(version: 2020_06_24_202126) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "label_albums", force: :cascade do |t|
+    t.bigint "album_id"
+    t.bigint "label_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["album_id"], name: "index_label_albums_on_album_id"
+    t.index ["label_id"], name: "index_label_albums_on_label_id"
+  end
+
+  create_table "labels", force: :cascade do |t|
+    t.string "name"
+    t.string "website"
+    t.text "bio"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "member_artists", force: :cascade do |t|
     t.bigint "member_id"
     t.bigint "artist_id"
+    t.boolean "active_member"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["artist_id"], name: "index_member_artists_on_artist_id"
