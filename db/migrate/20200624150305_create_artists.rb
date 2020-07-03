@@ -4,6 +4,7 @@ class CreateArtists < ActiveRecord::Migration[6.0]
       t.string :name
       t.text :bio
       t.string :website
+      t.string :d_artist_id
       t.timestamps
     end
   end

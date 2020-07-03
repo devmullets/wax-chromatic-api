@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 2020_07_01_140007) do
     t.string "color"
     t.integer "amount_pressed"
     t.text "notes"
+    t.string "d_release_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -87,6 +88,7 @@ ActiveRecord::Schema.define(version: 2020_07_01_140007) do
     t.string "name"
     t.text "bio"
     t.string "website"
+    t.string "d_artist_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -143,7 +145,7 @@ ActiveRecord::Schema.define(version: 2020_07_01_140007) do
   create_table "members", force: :cascade do |t|
     t.string "name"
     t.text "bio"
-    t.integer "age"
+    t.string "d_member_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

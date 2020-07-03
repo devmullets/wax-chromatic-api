@@ -3,7 +3,7 @@ class CreateMembers < ActiveRecord::Migration[6.0]
     create_table :members do |t|
       t.string :name
       t.text :bio
-      t.integer :age
+      t.string :d_member_id
       t.timestamps
     end
   end
