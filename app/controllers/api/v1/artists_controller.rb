@@ -23,7 +23,8 @@ module Api
             Artist.create(
               name: artist_parse["name"],
               bio: artist_parse["profile"],
-              website: artist_parse["urls"][0],
+              # website: artist_parse["urls"][0], #need to error handle if any entries are empty, for some reason
+              website: nil,
               d_artist_id: artist_id
             )
             new_artist = Artist.find_by(d_artist_id: artist_id)
