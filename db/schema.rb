@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_01_140007) do
+ActiveRecord::Schema.define(version: 2020_07_05_113419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,15 +55,19 @@ ActiveRecord::Schema.define(version: 2020_07_01_140007) do
   end
 
   create_table "albums", force: :cascade do |t|
-    t.string "name"
-    t.date "release_date"
+    t.string "title"
+    t.date "released"
     t.integer "size"
     t.string "color"
     t.integer "amount_pressed"
     t.text "notes"
     t.string "d_release_id"
+    t.string "d_album_id"
+    t.string "cat_no"
+    t.bigint "release_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["release_id"], name: "index_albums_on_release_id"
   end
 
   create_table "artist_albums", force: :cascade do |t|
@@ -146,6 +150,15 @@ ActiveRecord::Schema.define(version: 2020_07_01_140007) do
     t.string "name"
     t.text "bio"
     t.string "d_member_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "releases", force: :cascade do |t|
+    t.string "d_release_id"
+    t.string "d_artist_id"
+    t.string "title"
+    t.string "artist"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

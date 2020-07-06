@@ -16,6 +16,9 @@ module Api
 
       def check_artist(artist_id) 
         find_artist = Artist.find_by(d_artist_id: artist_id) rescue nil
+      # rescue RestClient::Exception
+
+      # end 
         if !find_artist
             url = RestClient.get("https://api.discogs.com/artists/#{artist_id}")
             artist_parse = JSON.parse(url)

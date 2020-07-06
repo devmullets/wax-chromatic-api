@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
-  resources :label_albums
-  resources :labels
   namespace :api do
     namespace :v1 do
+      get 'releases/d_release_id/:id', to: 'releases#release_id', as: :releases_release_id
+      get 'albums/d_release_id/:id', to: 'albums#release_id', as: :albums_release_id
+      
       resources :album_genres
       resources :genres
       resources :wantlist_albums
@@ -18,6 +19,10 @@ Rails.application.routes.draw do
       resources :wantlists
       resources :collections
       resources :users
+      resources :releases
+      resources :label_albums
+      resources :labels
+
     end
   end    
 
