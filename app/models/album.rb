@@ -1,4 +1,6 @@
 class Album < ApplicationRecord
+  belongs_to :release
+  
   has_many :album_genres
   has_many :genres, through: :album_genres
 
