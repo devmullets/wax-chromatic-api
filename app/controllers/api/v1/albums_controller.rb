@@ -31,7 +31,7 @@ module Api
 
       private
       def create_album_params
-        params.require(:album).permit(:title, :released, :size, :amount_pressed, :color, :notes, :d_album_id, :d_release_id, :cat_no, :release_id)
+        params.require(:album).permit(:title, :released, :size, :amount_pressed, :color, :notes, :d_album_id, :d_release_id, :cat_no, :release_id, :thumb)
       end
 
     end

@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 2020_07_05_113419) do
 
   create_table "albums", force: :cascade do |t|
     t.string "title"
-    t.date "released"
+    t.string "released"
     t.integer "size"
     t.string "color"
     t.integer "amount_pressed"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 2020_07_05_113419) do
     t.string "d_release_id"
     t.string "d_album_id"
     t.string "cat_no"
+    t.string "thumb"
     t.bigint "release_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
