@@ -16,6 +16,11 @@ module Api
         render json: album 
       end 
       
+      def vinyl
+        vinyl = Album.find(params[:id])
+        render json: vinyl
+      end
+
       def release_id 
         releases = Album.where(d_release_id: params[:id])
         render json: releases
@@ -33,7 +38,8 @@ module Api
       def create_album_params
         params.require(:album).permit(:title, :released, :size, :amount_pressed, :color, :notes, :d_album_id, :d_release_id, :cat_no, :release_id, :thumb)
       end
-
+      
+      
     end
   end
 end
