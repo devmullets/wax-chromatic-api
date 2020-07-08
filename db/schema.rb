@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_05_113419) do
+ActiveRecord::Schema.define(version: 2020_07_07_160459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,7 +61,6 @@ ActiveRecord::Schema.define(version: 2020_07_05_113419) do
     t.string "color"
     t.integer "amount_pressed"
     t.text "notes"
-    t.string "d_release_id"
     t.string "d_album_id"
     t.string "cat_no"
     t.string "thumb"
@@ -78,6 +77,15 @@ ActiveRecord::Schema.define(version: 2020_07_05_113419) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["album_id"], name: "index_artist_albums_on_album_id"
     t.index ["artist_id"], name: "index_artist_albums_on_artist_id"
+  end
+
+  create_table "artist_releases", force: :cascade do |t|
+    t.bigint "artist_id"
+    t.bigint "release_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["artist_id"], name: "index_artist_releases_on_artist_id"
+    t.index ["release_id"], name: "index_artist_releases_on_release_id"
   end
 
   create_table "artist_songs", force: :cascade do |t|
