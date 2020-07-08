@@ -7,5 +7,8 @@ class Artist < ApplicationRecord
 
   has_many :artist_songs
   has_many :songs, through: :artist_songs
+
+  has_many :artist_releases
+  has_many :releases, through: :artist_releases
   
 end

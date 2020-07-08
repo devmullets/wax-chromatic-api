@@ -12,8 +12,12 @@ module Api
       end
 
       def show
-        artist_releases = Release.where(d_artist_id: params[:id])
-        render json: artist_releases
+        # artist_releases = Release.where(d_artist_id: params[:id])
+        # render json: artist_releases
+
+        # searches by discogs release id and displays albums that belong to the release
+        releases = Release.where(d_release_id: params[:id])
+        render json: releases.as_json(:include => :albums)
       end 
 
       def release_id
