@@ -7,8 +7,13 @@ module Api
       end
 
       def show
-        user_collection = CollectionAlbum.where(collection_id: params[:id])
+        user_collection = CollectionAlbum.find_by(album_id: params[:id])
         render json: user_collection
+      end
+
+      def destroy
+        vinyl = CollectionAlbum.find(params[:id])
+        vinyl.destroy
       end
 
       def create
