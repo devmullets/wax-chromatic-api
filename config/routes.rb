@@ -3,9 +3,14 @@ Rails.application.routes.draw do
     namespace :v1 do
       
       get 'releases/d_release_id/:id', to: 'releases#release_id', as: :releases_release_id
-      get 'albums/d_release_id/:id', to: 'albums#release_id', as: :albums_release_id
+      get 'albums/release/', to: 'albums#release_id', as: :albums_release_id
+      get 'releases/artist/:id', to: 'releases#get_releases', as: :releases_get_releases
       
       get 'albums/vinyl/:id', to: 'albums#vinyl', as: :albums_vinyl
+
+      # get 'releases/artist/:id', to: 'releases#g'
+
+      # get 'services(/:d_artist_id)(/:d_release_id)', to: 'releases#load_releases', as: :releases_load_releases
       
       resources :artist_releases
       resources :album_genres

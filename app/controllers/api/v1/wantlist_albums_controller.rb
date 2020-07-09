@@ -7,8 +7,14 @@ module Api
       end
 
       def show
-        user_wantlist = WantlistAlbum.where(wantlist_id: params[:id])
+        # user_wantlist = WantlistAlbum.where(album_id: params[:id])
+        user_wantlist = WantlistAlbum.find_by(album_id: params[:id])
         render json: user_wantlist
+      end
+
+      def destroy
+        vinyl = WantlistAlbum.find(params[:id])
+        vinyl.destroy
       end
 
       def create
