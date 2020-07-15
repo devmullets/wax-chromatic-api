@@ -26,8 +26,6 @@ module Api
       end
 
       def release_id 
-        # releases = Album.where(d_release_id: params[:id])
-        # render json: releases.as_json(:include => :release)
         release = params[:album]
         artist = params[:artist]
 
