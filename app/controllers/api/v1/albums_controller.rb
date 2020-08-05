@@ -46,7 +46,7 @@ module Api
               'Authorization': "Discogs key=#{discogs_key}, secret=#{discogs_secret}",
               'User-Agent': "WaxChromatics/v0.1 +https://waxchromatics.com"
               })
-        
+          # url.headers will let me view how many requests are left, useful for error implementation - tbd
           albums_parse = JSON.parse(url)
           # byebug
           versions = albums_parse["versions"]
