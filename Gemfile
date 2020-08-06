@@ -42,6 +42,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'rest-client'
 gem 'json'
-gem 'faraday'
 # for hiding api keys
 gem 'dotenv-rails'
