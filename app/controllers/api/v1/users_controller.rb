@@ -2,8 +2,20 @@ module Api
   module V1
     class UsersController < ApplicationController
       def index
-        # temporarily having the oauth token response in just a general url
+        users = User.all
+        render json: users
+      end 
 
+      def create
+      end 
+
+      def show
+      end
+
+      def temp_oauth
+        # 
+        # first step in oauth process, get temp tokens and returns url to redirect user so they can sign in via discogs
+        # 
         discogs_key = ENV["DISCOGS_KEY"]
         discogs_secret = ENV["DISCOGS_SECRET"]
 
@@ -26,13 +38,14 @@ module Api
           }
 
           render json: url_json
-      end 
-
-      def create
-      end 
+      end
       
       def get_user 
-        # last step in oauth verification, will also check to see if user is in db
+        # 
+        # final step of oauth dance, takes in all previously supplied info
+        # temp token, temp token secret, and verifier
+        # oauth 1 is a pain
+        # 
         require "uri"
         require "net/http"
 
@@ -44,17 +57,17 @@ module Api
         time = Time.now.to_i.to_s
         url = URI("https://api.discogs.com/oauth/access_token")
         # 
-        # possible refactor to match code using RestClient, previously wasn't working
+        # possibly need to refactor to match code using RestClient, previously wasn't working, i think it had more to do with the format of the auth header
         # 
-        https = Net::HTTP.new(url.host, url.port)
-        https.use_ssl = true
-        request = Net::HTTP::Post.new(url)
-        request["Authorization"] = "OAuth oauth_consumer_key=\"#{discogs_key}\", oauth_nonce=\"#{time}\", oauth_token=\"#{oauth_token}\", oauth_signature=\"#{discogs_secret}\", oauth_signature_method=\"PLAINTEXT\", oauth_timestamp=\"#{time}\", oauth_verifier=\"#{oauth_verifier}\""
-        request["Content-Type"] = "application/x-www-form-urlencoded"
-        request["User-Agent"] = "WaxChromatics/v0.1 +https://waxchromatics.com"
-        
-        response = https.request(request)
-        req_token = CGI.parse(response.read_body)
+          https = Net::HTTP.new(url.host, url.port)
+          https.use_ssl = true
+          request = Net::HTTP::Post.new(url)
+          request["Authorization"] = "OAuth oauth_consumer_key=\"#{discogs_key}\", oauth_nonce=\"#{time}\", oauth_token=\"#{oauth_token}\", oauth_signature=\"#{discogs_secret}\", oauth_signature_method=\"PLAINTEXT\", oauth_timestamp=\"#{time}\", oauth_verifier=\"#{oauth_verifier}\""
+          request["Content-Type"] = "application/x-www-form-urlencoded"
+          request["User-Agent"] = "WaxChromatics/v0.1 +https://waxchromatics.com"
+          
+          response = https.request(request)
+          req_token = CGI.parse(response.read_body)
 
         perm_oauth_token = req_token['oauth_token'][0]
         perm_oauth_token_secret = req_token['oauth_token_secret'][0]
@@ -67,13 +80,23 @@ module Api
             'Authorization': "OAuth oauth_consumer_key=#{discogs_key}, oauth_nonce=#{time}, oauth_signature=#{discogs_secret_no_token + '&' + perm_oauth_token_secret}, oauth_signature_method=PLAINTEXT, oauth_timestamp=#{time}, oauth_token=#{perm_oauth_token}",
             'User-Agent': "WaxChromatics/v0.1 +https://waxchromatics.com"
             })
+        user_info_json = JSON.parse(user_info)
         # byebug
         # 
-        # need to create user in table once logged in
+        # see if user is returning or not
         # 
-        # user_info_json = CGI.parse(user_info.body)
-        user_info_json = JSON.parse(user_info)
-        render json: user_info_json
+        # {"id"=>985154, "username"=>"thekillingtree", "resource_url"=>"https://api.discogs.com/users/thekillingtree", "consumer_name"=>"Wax Chromatics"}
+        user_check = User.where(discogs_id: user_info_json['id']).exists?
+          if (user_check)
+            find_user = User.find_by(discogs_id: user_info_json['id'])
+            render json: find_user
+          else
+            new_user = User.create(name: user_info_json['username'], discogs_id: user_info_json['id'], oauth_token: perm_oauth_token, oauth_token_secret: perm_oauth_token_secret)
+            Collection.create(user_id: new_user.id)
+            Wantlist.create(user_id: new_user.id)
+            find_user = User.find_by(discogs_id: user_info_json['id'])
+            render json: find_user
+          end 
       end
 
     end
