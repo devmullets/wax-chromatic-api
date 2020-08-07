@@ -14,7 +14,6 @@ module Api
       
       def create
         album = Album.create(create_album_params) 
-        # album_release = AlbumRelease.create(album_release_params)
         render json: album 
       end 
       
@@ -33,7 +32,6 @@ module Api
         discogs_secret = ENV["DISCOGS_SECRET"]
 
         new_album = Release.where(d_release_id: release).exists?
-        # byebug
         if (new_album)
           # new_album = Release.find_by(d_artist_id: artist)
           find_release = Release.find_by(d_release_id: release)
@@ -83,18 +81,11 @@ module Api
           find_release = Release.find_by(d_release_id: release)
           render json: find_release.as_json(:include => :albums)
         end
-
-        # byebug
-
-
       end
 
       def show
-        # album = Album.find_by(d_album_id: params[:id])
         album = Album.find_by(d_album_id: params[:id])
         render json: album
-        # album = check_album(params[:id])
-        # render json: album
       end
 
 
