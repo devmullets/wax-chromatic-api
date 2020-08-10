@@ -13,13 +13,13 @@ module Api
       end
 
       def temp_oauth
-        # 
+        # {url}/users/login
         # first step in oauth process, get temp tokens and returns url to redirect user so they can sign in via discogs
         # 
         discogs_key = ENV["DISCOGS_KEY"]
         discogs_secret = ENV["DISCOGS_SECRET"]
 
-        time = Time.now.to_i
+        time = Time.now.to_i 
 
           url = ::RestClient::Request.execute(method: :get, url: "https://api.discogs.com/oauth/request_token", 
             headers: {
@@ -74,6 +74,7 @@ module Api
         # 
         # now to test that we have OAuth access by getting user identity
         # 
+        # byebug
         user_info = ::RestClient::Request.execute(method: :get, url: "https://api.discogs.com/oauth/identity", 
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded', 
@@ -85,16 +86,28 @@ module Api
         # 
         # see if user is returning or not
         # 
-        # {"id"=>985154, "username"=>"thekillingtree", "resource_url"=>"https://api.discogs.com/users/thekillingtree", "consumer_name"=>"Wax Chromatics"}
+        # can't decide if it's better to store oauth tokens in local storage of browser vs stripping those out and having the backend handle auth on requests
+        # leaving it as local storage for now but have toyed with stripping it out
+        # 
+        # discogs returns: {"id"=>123456, "username"=>"name", "resource_url"=>"https://api.discogs.com/users/#{username}", "consumer_name"=>"app name?"}
         user_check = User.where(discogs_id: user_info_json['id']).exists?
           if (user_check)
             find_user = User.find_by(discogs_id: user_info_json['id'])
+              # user_basic_info = {
+              #   'username' => find_user.name,
+              #   'discogs_id' => find_user.discogs_id
+              # }
             render json: find_user
           else
             new_user = User.create(name: user_info_json['username'], discogs_id: user_info_json['id'], oauth_token: perm_oauth_token, oauth_token_secret: perm_oauth_token_secret)
             Collection.create(user_id: new_user.id)
             Wantlist.create(user_id: new_user.id)
+
             find_user = User.find_by(discogs_id: user_info_json['id'])
+              # user_basic_info = {
+              #   'username' => find_user.name,
+              #   'discogs_id' => find_user.discogs_id
+              # }
             render json: find_user
           end 
       end
