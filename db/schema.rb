@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_07_112932) do
+ActiveRecord::Schema.define(version: 2020_08_10_205022) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -185,6 +185,8 @@ ActiveRecord::Schema.define(version: 2020_08_07_112932) do
     t.string "discogs_id"
     t.string "oauth_token"
     t.string "oauth_token_secret"
+    t.string "password_digest"
+    t.string "email"
   end
 
   create_table "wantlist_albums", force: :cascade do |t|
