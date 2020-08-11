@@ -9,8 +9,10 @@ Rails.application.routes.draw do
       get 'members/active/:artist_id', to: 'members#active_members', as: :members_active
       get 'albums/vinyl/:id', to: 'albums#vinyl', as: :albums_vinyl
       
-      get 'users/login/', to: 'users#temp_oauth', as: :user_temp_oauth
-      get 'users/authenticate', to: 'users#get_user', as: :user_authenticate
+      # might need to rename these to work with bcrypt
+      # get 'users/login/', to: 'users#temp_oauth', as: :user_temp_oauth
+      # get 'users/authenticate', to: 'users#get_user', as: :user_authenticate
+      
       
       resources :artist_releases
       resources :album_genres
@@ -27,7 +29,9 @@ Rails.application.routes.draw do
       resources :albums
       resources :wantlists
       resources :collections
-      resources :users
+      resources :users#, only: [:create] #, defaults: {format: :json}
+        post 'users/login', to: 'auth#create'
+        get 'users/profile', to: 'users#profile'
       resources :releases
       resources :label_albums
       resources :labels
