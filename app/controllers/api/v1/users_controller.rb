@@ -128,7 +128,7 @@ module Api
 
       private
       def user_params
-        params.require(:user).permit(:email, :password, :name, :discogs_id, :oauth_token, :oauth_token_secret)
+        params.require(:user).permit(:email, :password, :name, :discogs_id, :oauth_token, :oauth_token_secret, :wax_username)
       end
     end
   end
