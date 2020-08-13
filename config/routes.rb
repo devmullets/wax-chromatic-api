@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+      get 'oauth/temp', to: 'oauth#temp_oauth', as: :oauth_temp_oauth
+      get 'oauth/success', to: 'oauth#get_user', as: :user_authenticate
+
       resources :artist_releases
       resources :album_genres
       resources :genres
@@ -22,9 +25,7 @@ Rails.application.routes.draw do
       resources :users#, only: [:create] #, defaults: {format: :json}
         post 'users/login', to: 'auth#create'
         get 'users/profile', to: 'users#profile'
-        # might need to rename these to work with bcrypt
-        # get 'users/login/', to: 'users#temp_oauth', as: :user_temp_oauth
-        # get 'users/authenticate', to: 'users#get_user', as: :user_authenticate
+
       resources :releases
         get 'releases/d_release_id/:id', to: 'releases#release_id', as: :releases_release_id # handles query params
         get 'releases/artist/:id', to: 'releases#get_releases', as: :releases_get_releases
