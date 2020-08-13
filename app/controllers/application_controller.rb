@@ -3,8 +3,7 @@ class ApplicationController < ActionController::API
   
   def encode_token(payload)
     chromatics_key = ENV["WAX_KEY"]
-    discogs_key = ENV["DISCOGS_KEY"]
-    # should store secret in env variable
+    # jwt.encode(payload, secret)
     JWT.encode(payload, chromatics_key)
   end
   
