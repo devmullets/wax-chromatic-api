@@ -2,6 +2,7 @@
 module Api
   module V1
     class AlbumsController < ApplicationController
+
       def index
         albums = Album.all
         render json: albums
@@ -14,7 +15,7 @@ module Api
       
       def create
         album = Album.create(create_album_params) 
-        render json: album 
+        render json: album
       end 
       
       def vinyl
@@ -30,10 +31,9 @@ module Api
 
         discogs_key = ENV["DISCOGS_KEY"]
         discogs_secret = ENV["DISCOGS_SECRET"]
-
+        # byebug
         new_album = Release.where(d_release_id: release).exists?
         if (new_album)
-          # new_album = Release.find_by(d_artist_id: artist)
           find_release = Release.find_by(d_release_id: release)
           render json: find_release.as_json(:include => :albums)
         else 
