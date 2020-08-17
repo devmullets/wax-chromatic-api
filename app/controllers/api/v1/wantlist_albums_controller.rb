@@ -8,8 +8,8 @@ module Api
 
       def show
         # user_wantlist = WantlistAlbum.where(album_id: params[:id])
-        user_wantlist = WantlistAlbum.find_by(album_id: params[:id])
-        render json: user_wantlist
+        # user_wantlist = WantlistAlbum.find_by(album_id: params[:id])
+        # render json: user_wantlist
       end
 
       def destroy

@@ -55,6 +55,7 @@ module Api
             version["major_formats"].include? 'Vinyl'
           end
           # check and see if release is created, if not create it --- brittle as it assumes user selected vinyl release
+          # TODO build in error check for non vinyl album selected
           new_release = Release.find_or_create_by(d_release_id: release) do |each_release|  
             artist_info = Artist.find(artist)
             each_release.artist = artist_info.name
