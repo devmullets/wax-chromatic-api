@@ -14,7 +14,9 @@ module Api
           token = encode_token(user_id: user.id)
           Wantlist.create(user_id: user.id)
           Collection.create(user_id: user.id)
-          render json: { user: UserSerializer.new(user), jwt: token }, status: :created
+          wantlist = Wantlist.find_by(user_id: user.id)
+          collection = Collection.find_by(user_id: user.id)
+          render json: { user: UserSerializer.new(user), jwt: token, wantlist: wantlist.id, collection: collection.id }, status: :created
         else
           render json: { error: 'failed to create user' }, status: :not_acceptable
         end
