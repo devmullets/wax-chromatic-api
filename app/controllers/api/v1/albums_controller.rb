@@ -32,6 +32,9 @@ module Api
         discogs_key = ENV["DISCOGS_KEY"]
         discogs_secret = ENV["DISCOGS_SECRET"]
         # byebug
+        # 
+        # look up main release and see if it exists in db
+        # 
         new_album = Release.where(d_release_id: release).exists?
         if (new_album)
           find_release = Release.find_by(d_release_id: release)
