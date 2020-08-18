@@ -7,9 +7,11 @@ module Api
       end
 
       def show
-        # user_wantlist = WantlistAlbum.where(album_id: params[:id])
+        # old show - pretty sure it did nothing -
         # user_wantlist = WantlistAlbum.find_by(album_id: params[:id])
         # render json: user_wantlist
+
+        # let's look up wantlist by user id 
       end
 
       def destroy
