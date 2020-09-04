@@ -18,7 +18,7 @@ install_plugin Capistrano::SCM::Git
 # removed line below since it's Rails API only
 # require 'capistrano/rails'
 require 'capistrano/bundler'
-require 'capistrano/rails/migrations'
+# require 'capistrano/rails/migrations'
 
 require 'capistrano/passenger'
 require 'capistrano/rbenv'
