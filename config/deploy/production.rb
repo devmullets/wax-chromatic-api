@@ -59,6 +59,3 @@
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
-
-set: stage, production
-server '104.248.61.119', user: 'deploy', roles: %w{app db web}

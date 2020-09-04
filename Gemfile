@@ -45,8 +45,8 @@ gem 'json'
 # for hiding api keys
 gem 'dotenv-rails'
 
+# stuff for auth
 gem "jwt", "~> 2.2"
-
 gem "active_model_serializers", "~> 0.10.10"
 
 # stuff for digitalocean deployment
@@ -54,4 +54,4 @@ gem 'capistrano', '~> 3.14', '>= 3.14.1'
 gem 'capistrano-rails', '~> 1.6', '>= 1.6.1'
 gem 'capistrano-passenger', '~> 0.2.0'
 
-gem 'capistrano-rvm'
+gem 'capistrano-rbenv', '~> 2.2', '>= 2.2.0'
