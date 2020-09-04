@@ -79,7 +79,8 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
-  database: wax_chromatic_api_production
-  username: wax_chromatic_api
-  password: <%= ENV['WAX_CHROMATIC_API_DATABASE_PASSWORD'] %>
+ # <<: *default
+ # database: wax_chromatic_api_production
+ # username: wax_chromatic_api
+ # password: <%= ENV['WAX_CHROMATIC_API_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
