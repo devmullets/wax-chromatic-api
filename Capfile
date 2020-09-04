@@ -15,7 +15,11 @@ require "capistrano/deploy"
 require "capistrano/scm/git"
 install_plugin Capistrano::SCM::Git
 
-require 'capistrano/rails'
+# removed line below since it's Rails API only
+# require 'capistrano/rails'
+require 'capistrano/bundler'
+require 'capistrano/rails/migrations'
+
 require 'capistrano/passenger'
 require 'capistrano/rbenv'
 
