@@ -1,24 +1,29 @@
-# README
+# Wax Chromatics
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Wax Chromatics is a vinyl record collection app
 
-Things you may want to cover:
+## Installation
 
-* Ruby version
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 
-* System dependencies
+```bash
+pip install foobar
+```
 
-* Configuration
+## Usage
 
-* Database creation
+```python
+import foobar
 
-* Database initialization
+foobar.pluralize('word') # returns 'words'
+foobar.pluralize('goose') # returns 'geese'
+foobar.singularize('phenomena') # returns 'phenomenon'
+```
 
-* How to run the test suite
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-* Services (job queues, cache servers, search engines, etc.)
+Please make sure to update tests as appropriate.
 
-* Deployment instructions
-
-* ...
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
