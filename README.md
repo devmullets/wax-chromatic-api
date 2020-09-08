@@ -8,6 +8,7 @@ Clone the repo down to your computer
 
 ```bash
 bundle install
+rails s
 ```
 
 ## Usage
