@@ -1,7 +1,7 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.14.1"
 
-set :application, "wax-chromatics-api"
+set :application, "api.waxchromatics.com"
 set :repo_url, "git@github.com:denvermullets/wax-chromatic-api.git"
 
 # Deploy to the user's home directory
