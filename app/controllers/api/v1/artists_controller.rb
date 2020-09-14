@@ -43,6 +43,26 @@ module Api
         end
         new_artist
       end
+
+      def search
+        discogs_key = ENV["DISCOGS_KEY"]
+        discogs_secret = ENV["DISCOGS_SECRET"]
+
+        artist = params[:artist]
+        # https://api.discogs.com/database/search?q=${search}&type=artist
+        url = ::RestClient::Request.execute(method: :get, url: "https://api.discogs.com/database/search?q=#{artist}&type=artist", 
+          headers: {
+            'Content-Type': 'application/json', 
+            'Accept': 'application/vnd.discogs.v2.plaintext+json', 
+            'Authorization': "Discogs key=#{discogs_key}, secret=#{discogs_secret}",
+            'User-Agent': "WaxChromatics/v0.1 +https://waxchromatics.com"
+            })
+      
+        artist_parse = JSON.parse(url)
+        # byebug
+        render json: artist_parse
+
+      end
       
       def member_check(artist_parse, new_artist)
         members = artist_parse["members"]
