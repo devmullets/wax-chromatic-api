@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       get 'oauth/success', to: 'oauth#get_user', as: :user_authenticate
       get 'albums/release/', to: 'albums#release_id', as: :albums_release_id
       get 'albums/vinyl/:id', to: 'albums#vinyl', as: :albums_vinyl
+      get 'artists/search/', to: 'artists#search', as: :artist_search
       get 'members/active/:artist_id', to: 'members#active_members', as: :members_active
       post 'users/login', to: 'auth#create'
       get 'users/profile', to: 'users#profile'
