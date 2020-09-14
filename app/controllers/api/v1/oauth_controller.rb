@@ -14,7 +14,7 @@ module Api
           url = ::RestClient::Request.execute(method: :get, url: "https://api.discogs.com/oauth/request_token", 
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded', 
-              'Authorization': "OAuth oauth_consumer_key=#{discogs_key}, oauth_nonce=#{time}, oauth_signature=#{discogs_secret}&, oauth_signature_method=PLAINTEXT, oauth_timestamp=#{time}, oauth_callback=https://localhost:3001/profile",
+              'Authorization': "OAuth oauth_consumer_key=#{discogs_key}, oauth_nonce=#{time}, oauth_signature=#{discogs_secret}&, oauth_signature_method=PLAINTEXT, oauth_timestamp=#{time}, oauth_callback=https://waxchromatics.com/profile",
               'User-Agent': "WaxChromatics/v0.1 +https://waxchromatics.com"
               })
           # byebug
@@ -61,7 +61,7 @@ module Api
         req_token = CGI.parse(response.read_body)
         # 
         # now to test that we have OAuth access by getting user identity from discogs
-        # currently no error handling for revoked user, will need to add
+        # TODO: currently no error handling for if a user has revoked application access , will need to add
         # 
         perm_oauth_token = req_token['oauth_token'][0]
         perm_oauth_token_secret = req_token['oauth_token_secret'][0]
