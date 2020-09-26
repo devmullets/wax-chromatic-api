@@ -23,4 +23,4 @@ foobar.singularize('phenomena') # returns 'phenomenon'
 
 ## Models
 
-[Wax Chromatic Model Structure](https://i.imgur.com/GQrTEV3.png)
+![Wax Chromatic Model Structure](https://i.imgur.com/GQrTEV3.png)
