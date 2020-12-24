@@ -14,3 +14,5 @@ rails s
 ## Models
 
 ![Wax Chromatic Model Structure](https://i.imgur.com/GQrTEV3.png)
+
+Rails API backend for [WaxChromatics.com](https://waxchromatics.com)
