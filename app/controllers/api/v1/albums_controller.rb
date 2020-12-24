@@ -1,23 +1,23 @@
 # require 'byebug'
 module Api
   module V1
+    # Albums controller returns list of albums
     class AlbumsController < ApplicationController
-
       def index
         albums = Album.all
         render json: albums
-      end 
+      end
 
       def album_id
         releases = Album.where(d_release_id: params[:id])
         render json: releases
       end
-      
+
       def create
-        album = Album.create(create_album_params) 
+        album = Album.create(create_album_params)
         render json: album
-      end 
-      
+      end
+
       def vinyl
         vinyl = Album.find(params[:id])
         band = Album.find(params[:id]).release.artist
@@ -25,29 +25,33 @@ module Api
         render json: vinyl.as_json.merge(artist: band)
       end
 
-      def release_id 
+      def release_id
         release = params[:album]
         artist = params[:artist]
 
-        discogs_key = ENV["DISCOGS_KEY"]
-        discogs_secret = ENV["DISCOGS_SECRET"]
+        discogs_key = ENV['DISCOGS_KEY']
+        discogs_secret = ENV['DISCOGS_SECRET']
         # byebug
-        # 
+        #
         # look up main release and see if it exists in db
-        # 
+        #
         new_album = Release.where(d_release_id: release).exists?
-        if (new_album)
+        if new_album
           find_release = Release.find_by(d_release_id: release)
-          render json: find_release.as_json(:include => :albums)
-        else 
-          url = ::RestClient::Request.execute(method: :get, url: "https://api.discogs.com/masters/#{release}/versions?page=1&per_page=100", 
+
+          render json: find_release.as_json(include: :albums)
+        else
+          url = ::RestClient::Request.execute(
+            method: :get,
+            url: "https://api.discogs.com/masters/#{release}/versions?page=1&per_page=100",
             headers: {
-              'Content-Type': 'application/json', 
-              'Accept': 'application/vnd.discogs.v2.plaintext+json', 
+              'Content-Type': 'application/json',
+              'Accept': 'application/vnd.discogs.v2.plaintext+json',
               'Authorization': "Discogs key=#{discogs_key}, secret=#{discogs_secret}",
-              'User-Agent': "WaxChromatics/v0.1 +https://waxchromatics.com"
-              })
-          # url.headers will let me view how many requests are left, useful for error implementation - tbd
+              'User-Agent': 'WaxChromatics/v0.1 +https://waxchromatics.com'
+            }
+          )
+          # TODO: url.headers will let me view how many requests are left, useful for error implementation
           albums_parse = JSON.parse(url)
           # byebug
           versions = albums_parse["versions"]
@@ -55,8 +59,8 @@ module Api
             version["major_formats"].include? 'Vinyl'
           end
           # check and see if release is created, if not create it --- brittle as it assumes user selected vinyl release
-          # TODO build in error check for non vinyl album selected
-          new_release = Release.find_or_create_by(d_release_id: release) do |each_release|  
+          # TODO: build in error check for non vinyl album selected
+          new_release = Release.find_or_create_by(d_release_id: release) do |each_release|
             artist_info = Artist.find(artist)
             each_release.artist = artist_info.name
             each_release.title = vinyl_versions[0]["title"]
@@ -92,15 +96,14 @@ module Api
         render json: album
       end
 
-
       private
+
       def create_album_params
-        params.require(:album).permit(:title, :released, :size, :amount_pressed, :color, :notes, :d_album_id, :cat_no, :release_id, :thumb)
+        params.require(:album).permit(
+          :title, :released, :size, :amount_pressed, :color,
+          :notes, :d_album_id, :cat_no, :release_id, :thumb
+        )
       end
-
-
-      
-      
     end
   end
 end

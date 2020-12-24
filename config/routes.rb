@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       post 'users/login', to: 'auth#create'
       get 'users/profile', to: 'users#profile'
       get 'releases/d_release_id/:id', to: 'releases#release_id', as: :releases_release_id # handles query params
-      get 'releases/artist/:id', to: 'releases#get_releases', as: :releases_get_releases
+      get 'releases/artist/:id', to: 'releases#artist_releases', as: :releases_artist_releases
 
       resources :artist_releases
       resources :album_genres
@@ -27,10 +27,10 @@ Rails.application.routes.draw do
       resources :albums
       resources :wantlists
       resources :collections
-      resources :users#, only: [:create] #, defaults: {format: :json}
+      resources :users # , only: [:create] #, defaults: {format: :json}
       resources :releases
       resources :label_albums
       resources :labels
     end
-  end    
+  end
 end
