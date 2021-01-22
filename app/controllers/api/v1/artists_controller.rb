@@ -15,55 +15,26 @@ module Api
         render json: artist
       end
 
-      def check_artist(artist_id) 
-        discogs_key = ENV["DISCOGS_KEY"]
-        discogs_secret = ENV["DISCOGS_SECRET"]
+      def check_artist(artist_id)
+        artist = Artists::CheckArtist.call(artist_id)
 
-        new_artist = Artist.where(d_artist_id: artist_id).exists?
-        if (new_artist)
-          new_artist = Artist.find_by(d_artist_id: artist_id)
-        else 
-          url = ::RestClient::Request.execute(method: :get, url: "https://api.discogs.com/artists/#{artist_id}", 
-            headers: {
-              'Content-Type': 'application/json', 
-              'Accept': 'application/vnd.discogs.v2.plaintext+json', 
-              'Authorization': "Discogs key=#{discogs_key}, secret=#{discogs_secret}",
-              'User-Agent': "WaxChromatics/v0.1 +https://waxchromatics.com"
-              })
-        
-          artist_parse = JSON.parse(url)
-          new_artist = Artist.find_or_create_by(d_artist_id: artist_id) do |artist|  
-            artist.name = artist_parse["name"]
-            artist.bio = artist_parse["profile"]
-            artist.website = nil
-            artist.d_artist_id = artist_id
-          end
-
-          member_check(artist_parse, new_artist)
-        end
-        new_artist
+        # member_check(artist_parse, new_artist)
       end
 
       def search
-        discogs_key = ENV["DISCOGS_KEY"]
-        discogs_secret = ENV["DISCOGS_SECRET"]
-
-        artist = params[:artist]
-        # https://api.discogs.com/database/search?q=${search}&type=artist
-        url = ::RestClient::Request.execute(method: :get, url: "https://api.discogs.com/database/search?q=#{artist}&type=artist", 
+        url = ::RestClient::Request.execute(
+          method: :get, url: "https://api.discogs.com/database/search?q=#{params[:artist]}&type=artist",
           headers: {
-            'Content-Type': 'application/json', 
-            'Accept': 'application/vnd.discogs.v2.plaintext+json', 
+            'Content-Type': 'application/json',
+            'Accept': 'application/vnd.discogs.v2.plaintext+json',
             'Authorization': "Discogs key=#{discogs_key}, secret=#{discogs_secret}",
-            'User-Agent': "WaxChromatics/v0.1 +https://waxchromatics.com"
-            })
-      
+            'User-Agent': 'WaxChromatics/v0.1 +https://waxchromatics.com'
+          }
+        )
         artist_parse = JSON.parse(url)
-        # byebug
         render json: artist_parse
-
       end
-      
+
       def member_check(artist_parse, new_artist)
         members = artist_parse["members"]
           members.each do |single_member|
@@ -72,11 +43,24 @@ module Api
               member.name = single_member["name"]
               member.bio = nil
               member.d_member_id = single_member["id"]
-            end    
+            end
             new_member_artist = MemberArtist.create(member_id: new_member.id, artist_id: new_artist.id, active_member: single_member["active"])
-          end    
+          end
       end
 
+      private
+
+      def create_artist
+
+      end
+
+      def discogs_key
+        ENV['DISCOGS_KEY']
+      end
+
+      def discogs_secret
+        ENV['DISCOGS_SECRET']
+      end
     end
   end
 end

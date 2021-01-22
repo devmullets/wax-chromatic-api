@@ -1,6 +1,6 @@
 class Api::V1::AuthController < ApplicationController
   skip_before_action :authorized, only: [:create]
- 
+
   def create
     @user = User.find_by(email: user_login_params[:email])
     #User#authenticate comes from BCrypt
@@ -14,8 +14,9 @@ class Api::V1::AuthController < ApplicationController
       render json: { message: 'Invalid email or password' }, status: :unauthorized
     end
   end
- 
+
   private
+
   def user_login_params
     # params { user: {email: 'Chandler Bing', password: 'hi' } }
     params.require(:user).permit(:email, :password)
