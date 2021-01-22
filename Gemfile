@@ -27,7 +27,7 @@ gem 'rack-cors'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
 end
 
 group :development do
@@ -40,18 +40,20 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'rest-client'
 gem 'json'
+gem 'rest-client'
 # for hiding api keys
 gem 'dotenv-rails'
 
 # stuff for auth
-gem "jwt", "~> 2.2"
-gem "active_model_serializers", "~> 0.10.10"
+gem 'active_model_serializers', '~> 0.10.10'
+gem 'jwt', '~> 2.2'
 
 # stuff for digitalocean deployment
 gem 'capistrano', '~> 3.14', '>= 3.14.1'
-gem 'capistrano-rails', '~> 1.6', '>= 1.6.1'
 gem 'capistrano-passenger', '~> 0.2.0'
+gem 'capistrano-rails', '~> 1.6', '>= 1.6.1'
 
 gem 'capistrano-rbenv', '~> 2.2', '>= 2.2.0'
+
+gem 'pry', '~> 0.13.1'

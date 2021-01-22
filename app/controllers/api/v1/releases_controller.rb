@@ -28,6 +28,7 @@ module Api
       end
 
       def artist_releases
+        binding.pry
         discogs_key = ENV['DISCOGS_KEY']
         discogs_secret = ENV['DISCOGS_SECRET']
         d_artist_id = params[:id]
